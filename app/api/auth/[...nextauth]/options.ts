@@ -2,6 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const options: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET as string,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -26,14 +27,6 @@ export const options: NextAuthOptions = {
           return credentials;
         }
         return null;
-
-        // try {
-        //   const user = await login(credentials.email, credentials.password);
-        //   return user;
-        // } catch (e: any) {
-        //   console.error(e);
-        //   return null;
-        // }
       },
     }),
   ],

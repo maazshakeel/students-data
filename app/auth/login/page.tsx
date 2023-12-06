@@ -15,10 +15,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 
 const loginFormSchema = z.object({
@@ -39,34 +39,28 @@ export default function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    toast({
-      description: "Done",
-      variant: "success",
+    setSubmiting(true);
+    const user: any = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
     });
-    // setSubmiting(true);
-    // const user: any = await signIn("credentials", {
-    //   email: values.email,
-    //   password: values.password,
-    //   redirect: false,
-    // });
-    // if (user.ok === true) {
-    //   alert("good");
-    //   setSubmiting(false);
-    //
-    //   toast({
-    //     variant: "default",
-    //     title: "Success",
-    //     description: "Logged In!",
-    //   });
-    //   redirect("/api/auth/signin?callbackUrl=/");
-    // } else {
-    //   setSubmiting(false);
-    //   toast({
-    //     variant: "destructive",
-    //     title: "Error",
-    //     description: "Invalid email or password!",
-    //   });
-    // }
+    if (user.ok === true) {
+      setSubmiting(false);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Logged In!",
+      });
+      router.push("/");
+    } else {
+      setSubmiting(false);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Invalid email or password!",
+      });
+    }
   }
   return (
     <Form {...form}>
