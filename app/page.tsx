@@ -1,8 +1,7 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
-import { getServerSession } from "next-auth";
-import { options } from "./api/auth/[...nextauth]/options";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 export default function Home() {

@@ -19,6 +19,7 @@ export const options: NextAuthOptions = {
           placeholder: "Password",
         },
       },
+      //@ts-ignore
       async authorize(credentials) {
         if (
           credentials?.email === "admin@gmail.com" &&
