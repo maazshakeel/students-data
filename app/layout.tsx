@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
 import { Chakra_Petch as FontSans } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 
 import { cn } from "@/lib/utils";
 
@@ -29,6 +30,8 @@ export default function RootLayout({
         )}
       >
         {children}
+
+        <Toaster />
       </body>
     </html>
   );
